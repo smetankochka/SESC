@@ -1,12 +1,14 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include <string>
 
-struct Polar_Point {
-    double r;    // Радиус (расстояние от начала координат до точки)
-    double theta;    // Угол (в радианах)
-};
+// struct Polar_Point {
+//     double r;    // Радиус (расстояние от начала координат до точки)
+//     double theta;    // Угол (в радианах)
+// };
 
-struct DeCart_Point {
+struct decartpoint {
     double x;    // Координата x
     double y;    // Координата y
 };
@@ -16,18 +18,33 @@ double degreesToRadians(double degrees) {
     return degrees * (pi / 180.0);
 }
 
-DeCart_Point polarToDeCart(const Polar_Point& p) {
-    DeCart_Point c;
-    c.x = p.r * cos(p.theta);
-    c.y = p.r * sin(p.theta);
+decartpoint polarToDeCart(double r, double theta) {
+    decartpoint c;
+    theta = degreesToRadians(theta);
+    c.x = r * cos(theta);
+    c.y = r * sin(theta);
     return c;
 }
 
+bool NewPoint(std::string s, std::vector<decartpoint> &points) {
+}
+
 int main() {
-    Polar_Point p;    // Пример полярных координат: r = 5, theta = 1.2 радиана
-    p.r = 2.0;
-    p.theta = degreesToRadians(45);
-    DeCart_Point cartesian = polarToDeCart(p);
-    std::cout << "Декартовы координаты: x = " << cartesian.x << ", y = " << cartesian.y << std::endl;
+    int n, m;
+    std::cin >> n;
+    while (n--) {
+        std::cin >> m;
+        std::vector<decartpoint> points(m);
+        for (int i = 0; i < m; i++) {
+            std::string s;
+            std::cin >> s;
+            NewPoint(s, points);
+        }
+    }
+    // Polar_Point p;    // Пример полярных координат: r = 5, theta = 1.2 радиана
+    // p.r = 2.0;
+    // p.theta = degreesToRadians(45);
+    // DeCart_Point cartesian = polarToDeCart(p);
+    // std::cout << "Декартовы координаты: x = " << cartesian.x << ", y = " << cartesian.y << std::endl;
     return 0;
 }
