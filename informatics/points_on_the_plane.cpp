@@ -3,11 +3,6 @@
 #include <vector>
 #include <string>
 
-// struct Polar_Point {
-//     double r;    // Радиус (расстояние от начала координат до точки)
-//     double theta;    // Угол (в радианах)
-// };
-
 struct decartpoint {
     double x;    // Координата x
     double y;    // Координата y
@@ -26,25 +21,44 @@ decartpoint polarToDeCart(double r, double theta) {
     return c;
 }
 
-bool NewPoint(std::string s, std::vector<decartpoint> &points) {
+void NewPoint(std::vector<decartpoint> &points, const int& k) {
+    std::string s;
+    std::cin >> s;
+    if (s == "P"){
+        double r, a;
+        std::cin >> r >> a;
+        points[k] = polarToDeCart(r, a);
+    }else{
+        points[k].x = std::stoi(s);
+        std::cin >> points[k].y;
+    }
+}
+
+double distanceBetweenPoints(const decartpoint& p1, const decartpoint& p2) {
+    return std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2));
+}
+
+double spacing(std::vector<decartpoint> &points, const int& m) {
+    double dist = 0;
+    for (int i = 0; i < m; i++) {
+        dist += distanceBetweenPoints(points[i], points[i + 1]);
+    }
+    return dist;
 }
 
 int main() {
     int n, m;
+    std::cout << "Enter the number of curves: \n";
     std::cin >> n;
     while (n--) {
+        std::cout << "Enter the number of points of the new curve: \n";
         std::cin >> m;
         std::vector<decartpoint> points(m);
         for (int i = 0; i < m; i++) {
-            std::string s;
-            std::cin >> s;
-            NewPoint(s, points);
+            std::cout << "Enter the coordinates: \n";
+            NewPoint(points, i);
         }
+        std::cout << "Distance: " << spacing(points, m - 1) << "\n";
     }
-    // Polar_Point p;    // Пример полярных координат: r = 5, theta = 1.2 радиана
-    // p.r = 2.0;
-    // p.theta = degreesToRadians(45);
-    // DeCart_Point cartesian = polarToDeCart(p);
-    // std::cout << "Декартовы координаты: x = " << cartesian.x << ", y = " << cartesian.y << std::endl;
     return 0;
 }
