@@ -23,7 +23,7 @@ int primMST(const std::vector<std::vector<Edge>> &graph) {
         }
         inMST[minVertex] = true;
         totalWeight += minWeight[minVertex];
-        for (const Edge &e : graph[minVertex]) {
+        for (const Edge &e: graph[minVertex]) {
             int v = e.to;
             int weight = e.weight;
             if (!inMST[v] && weight < minWeight[v]) {
